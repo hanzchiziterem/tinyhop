@@ -26,13 +26,11 @@ app.use(morgan("dev"));
 
 //@note: Routes
 app.get("/api/v1/health", (_req, res) =>
-  res
-    .status(200)
-    .json({
-      success: true,
-      status: "healthy",
-      timestamp: new Date().toISOString(),
-    }),
+  res.status(200).json({
+    success: true,
+    status: "healthy",
+    timestamp: new Date().toISOString(),
+  }),
 );
 app.use("/api/v1", v1Routes);
 
@@ -40,6 +38,20 @@ app.use("/api/v1", v1Routes);
 app.use(errorHandler);
 
 app.listen(port, async () => {
-  await dbConnect(connStr);
-  console.log("Server running");
+  try {
+    await dbConnect(connStr);
+    console.log(`
+    📦 Server started successfully!
+    📡 Environment: ${config.NODE_ENV || "development"}
+    🔌 Port: ${config.PORT}
+    
+    📍 Access URLs:
+      ➜  Network:  http://127.0.0.1:${config.PORT}
+      📖 API Documentation: http://127.0.0.1:${config.PORT}/api/v1/docs
+  `);
+  } catch (error: unknown) {
+    //@note: 500FTSS an error code for Failed to start server!
+    console.error("[500FTSS]", error);
+    process.exit(1);
+  }
 });
