@@ -7,6 +7,7 @@ import morgan from "morgan";
 
 import dbConnect from "@/config/db-connect.js";
 import errorHandler from "@/middlewares/error-handler.middleware.js";
+import v1Routes from "@/routes/index.js";
 
 //@note: Configurations
 
@@ -22,6 +23,18 @@ app.use(helmet());
 
 //@note: Logging
 app.use(morgan("dev"));
+
+//@note: Routes
+app.get("/api/v1/health", (_req, res) =>
+  res
+    .status(200)
+    .json({
+      success: true,
+      status: "healthy",
+      timestamp: new Date().toISOString(),
+    }),
+);
+app.use("/api/v1", v1Routes);
 
 //@note: Global Error Handler
 app.use(errorHandler);
