@@ -7,7 +7,9 @@ import morgan from "morgan";
 
 import dbConnect from "@/config/db-connect.js";
 import errorHandler from "@/middlewares/error-handler.middleware.js";
+
 import v1Routes from "@/routes/index.js";
+import redirectRoute from "@/routes/redirect.route.js";
 
 //@note: Configurations
 
@@ -32,7 +34,12 @@ app.get("/api/v1/health", (_req, res) =>
     timestamp: new Date().toISOString(),
   }),
 );
+
+//@note: API Routes
 app.use("/api/v1", v1Routes);
+
+//@note: Redirect at root
+app.use(redirectRoute);
 
 //@note: Global Error Handler
 app.use(errorHandler);
