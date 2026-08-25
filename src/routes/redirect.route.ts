@@ -1,8 +1,7 @@
 import {Router} from "express";
-import urlRoutes from "@/routes/url.route.js";
 
 const router = Router();
 
-router.use("/url", urlRoutes);
+router.get("/:shortId", (req, res) => {});
 
 export default router;
