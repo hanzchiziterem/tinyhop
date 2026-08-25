@@ -26,7 +26,7 @@ app.use(helmet());
 //@note: Logging
 app.use(morgan("dev"));
 
-//@note: Routes
+//@note: API Health Check
 app.get("/api/v1/health", (_req, res) =>
   res.status(200).json({
     success: true,
