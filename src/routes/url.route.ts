@@ -1,10 +1,10 @@
 import {Router} from "express";
-
+import {urlController} from "@/routes/container.js";
 const router = Router();
 
-//@todo: Add controller url later
+//@todo: Add controller for stats later
 
-router.post("/short", (req, res) => {});
+router.post("/short", urlController.createShortURL);
 router.get("/stats/:shortId", (req, res) => {});
 
 export default router;
